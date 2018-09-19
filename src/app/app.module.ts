@@ -11,18 +11,21 @@ import {
 import { AppComponent } from './app.component';
 import { SpotifyService } from './services/spotify.service';
 import { SearchComponent } from './search/search.component';
+import { TrackComponent } from './track/track.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full' },
-  { path: 'search', component: SearchComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'track', component: TrackComponent }
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    SearchComponent
+    SearchComponent,
+    TrackComponent
   ],
   imports: [
     BrowserModule,
