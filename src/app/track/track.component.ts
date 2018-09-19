@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
@@ -10,9 +11,10 @@ import { SpotifyService } from '../services/spotify.service';
 })
 export class TrackComponent implements OnInit {
   id: string;
-  track: any;
+  track: Object;
 
   constructor(
+      private location: Location,
       private route: ActivatedRoute,
       private spotify: SpotifyService
   ) {
@@ -33,11 +35,13 @@ export class TrackComponent implements OnInit {
   }
 
 
+  back(): void {
+    this.location.back();
+  }
+
+
   private renderTrack(result: any): void {
-    this.track = null;
-    if (result) {
-      this.track = result;
-    }
+    this.track = result;
   }
 
 }
