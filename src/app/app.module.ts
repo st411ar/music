@@ -2,6 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
+import {
+  APP_BASE_HREF,
+  LocationStrategy,
+  HashLocationStrategy
+} from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { SpotifyService } from './services/spotify.service';
@@ -24,7 +29,11 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes)
   ],
-  providers: [SpotifyService],
+  providers: [
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    SpotifyService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
