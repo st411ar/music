@@ -28,12 +28,16 @@
               </h3>
               <br>
               <p>
-                <a [routerLink]="['/tracks', track.id]">{{ track.name }}</a>
+                <a [routerLink]="['/tracks', track.id]">
+                  {{ track.name }}
+                </a>
               </p>
             </div>
             <div class="attribution">
               <h4>
-                <a href="#">{{ track.album.name }}</a>
+                <a [routerLink]="['/albums', track.album.id]">
+                  {{ track.album.name }}
+                </a>
               </h4>
             </div>
           </div>

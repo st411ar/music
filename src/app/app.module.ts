@@ -12,12 +12,14 @@ import { AppComponent } from './app.component';
 import { SpotifyService } from './services/spotify.service';
 import { SearchComponent } from './search/search.component';
 import { TrackComponent } from './track/track.component';
+import { AlbumComponent } from './album/album.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full' },
   { path: 'search', component: SearchComponent },
-  { path: 'tracks/:id', component: TrackComponent }
+  { path: 'tracks/:id', component: TrackComponent },
+  { path: 'albums/:id', component: AlbumComponent }
 ];
 
 
@@ -25,7 +27,8 @@ const routes: Routes = [
   declarations: [
     AppComponent,
     SearchComponent,
-    TrackComponent
+    TrackComponent,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,
