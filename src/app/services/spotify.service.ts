@@ -13,6 +13,10 @@ export class SpotifyService {
   constructor(private http: HttpClient) {}
 
 
+  getTrack(id: string): Observable<any> {
+    return this.query(`/tracks/${id}`);
+  }
+
   searchTrack(query: string): Observable<any> {
     return this.search(query, `track`);
   }
