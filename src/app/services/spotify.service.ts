@@ -8,19 +8,13 @@ import { SpotifyAPIKey } from '../../environments/spotifyApiKey';
 
 @Injectable()
 export class SpotifyService {
+  static BASE_URL = `https://api.spotify.com/v1`;
 
   constructor(private http: HttpClient) {}
 
 
   searchTrack(query: string): Observable<any> {
-    const params: string = [
-      `q=${query}`,
-      `type=track`
-    ].join(`&`);
-
-    const queryURL = `https://api.spotify.com/v1/search?${params}`;
-
-    return this.http.get(queryURL, this.buildRequestOptions());
+    return this.search(query, `track`);
   }
 
 
@@ -30,4 +24,19 @@ export class SpotifyService {
     });
     return { headers: headers };
   }
+
+  private query(url: string, params?: string[]): Observable<any> {
+    let queryUrl: string = `${SpotifyService.BASE_URL}${url}`;
+    if (params) {
+      queryUrl = `${queryUrl}?${params.join(`&`)}`;
+    }
+    const options: any = this.buildRequestOptions();
+
+    return this.http.get(queryUrl, options);
+  }
+
+  private search(query: string, type: string): Observable<any> {
+    return this.query(`/search`, [`q=${query}`, `type=${type}`]);
+  }
+
 }
