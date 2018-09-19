@@ -20,7 +20,7 @@ export class SpotifyService {
 
     const queryURL = `https://api.spotify.com/v1/search?${params}`;
 
-    return this.http.get(queryURL, this.buildRequestOptions())
+    return this.http.get(queryURL, this.buildRequestOptions());
   }
 
 
