@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { SpotifyService } from '../services/spotify.service';
 
@@ -10,9 +10,11 @@ import { SpotifyService } from '../services/spotify.service';
 })
 export class SearchComponent implements OnInit {
   query: string;
+  results: Object;
 
   constructor(
       private route: ActivatedRoute,
+      private router: Router,
       private spotify: SpotifyService
   ) {
     this.route.queryParams.subscribe(
@@ -22,18 +24,32 @@ export class SearchComponent implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.search();
+  }
 
 
-  submit(query: string): void {
+  renderResults(results: any): void {
+    this.results = null;
+    if (results && results.tracks && results.tracks.items) {
+      this.results = results.tracks.items;
+    }
+  }
+
+  search(): void {
     if (this.query) {
       this.spotify.searchTrack(this.query)
         .subscribe(
           (results: any) => {
-            console.log(results);
+            this.renderResults(results);
           }
         );
     }
+  }
+
+  submit(query: string): void {
+    this.router.navigate([`search`], { queryParams: { query: query } })
+      .then(_ => this.search());
   }
 
 }
