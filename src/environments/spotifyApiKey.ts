@@ -1,1 +1,2 @@
-export const SpotifyAPIKey = 'BQCpxZ8VjpF5iS9Or5BWZC75zkzmti33PbPKgZDfur2hPfb0kVplbcGiCfmgcrSu4zt_0vBZwOsh7GmOoIE';
+// this file should be auto-generated when you run `npm start`
+export const SpotifyAPIKey = 'Run npm start to generate this -- SEE DOCS';
