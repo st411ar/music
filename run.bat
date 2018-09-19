@@ -1,1 +1,1 @@
-start cmd /k npm start -o
+start cmd /k npm start
