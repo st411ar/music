@@ -8,6 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "getSpotifyToken": "node scripts/spotifyKey.js",
+    "prebuild": "npm run getSpotifyToken",
     "prestart": "npm run getSpotifyToken",
     "pree2e": "npm run getSpotifyToken",
     "e2e": "ng e2e"
