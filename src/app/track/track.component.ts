@@ -10,6 +10,7 @@ import { SpotifyService } from '../services/spotify.service';
 })
 export class TrackComponent implements OnInit {
   id: string;
+  track: any;
 
   constructor(
       private route: ActivatedRoute,
@@ -33,7 +34,10 @@ export class TrackComponent implements OnInit {
 
 
   private renderTrack(result: any): void {
-    console.log(`renderTrack()`);
+    this.track = null;
+    if (result) {
+      this.track = result;
+    }
   }
 
 }
