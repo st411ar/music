@@ -29,14 +29,20 @@ export class SearchComponent implements OnInit {
   }
 
 
-  renderResults(results: any): void {
+  submit(query: string): void {
+    this.router.navigate([`search`], { queryParams: { query: query } })
+      .then(_ => this.search());
+  }
+
+
+  private renderResults(results: any): void {
     this.results = null;
     if (results && results.tracks && results.tracks.items) {
       this.results = results.tracks.items;
     }
   }
 
-  search(): void {
+  private search(): void {
     if (this.query) {
       this.spotify.searchTrack(this.query)
         .subscribe(
@@ -45,11 +51,6 @@ export class SearchComponent implements OnInit {
           }
         );
     }
-  }
-
-  submit(query: string): void {
-    this.router.navigate([`search`], { queryParams: { query: query } })
-      .then(_ => this.search());
   }
 
 }
