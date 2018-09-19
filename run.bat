@@ -1,1 +1,1 @@
-start cmd /k ng serve -o
+start cmd /k npm start -o
