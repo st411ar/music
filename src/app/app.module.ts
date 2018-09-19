@@ -16,7 +16,8 @@ import { TrackComponent } from './track/track.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full' },
-  { path: 'search', component: SearchComponent }
+  { path: 'search', component: SearchComponent },
+  { path: 'track', component: TrackComponent }
 ];
 
 
