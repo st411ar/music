@@ -35,8 +35,9 @@ export class AlbumComponent implements OnInit {
   }
 
 
-  back(): void {
+  back(): boolean {
     this.location.back();
+    return false;
   }
 
 
