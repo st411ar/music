@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { SpotifyService } from '../services/spotify.service';
+import {SpotifyDeprecatedService} from '../services/spotify-deprecated.service';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class ArtistComponent implements OnInit {
   constructor(
       private location: Location,
       private route: ActivatedRoute,
-      private spotify: SpotifyService
+      private spotify: SpotifyDeprecatedService
   ) {
     this.route.params.subscribe(
       (params: Params) => {

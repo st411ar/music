@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs';
 
+
 import { SpotifyAPIKey } from '../../environments/spotifyApiKey';
+import {map} from 'rxjs/operators';
 
 
-@Injectable()
-export class SpotifyService {
+@Injectable({
+  providedIn: 'root'
+})
+export class SpotifyDeprecatedService {
   static BASE_URL = `https://api.spotify.com/v1`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: Http) {}
 
 
   getAlbum(id: string): Observable<any> {
@@ -30,24 +34,27 @@ export class SpotifyService {
 
 
   private buildRequestOptions(): any {
-    const headers: HttpHeaders = new HttpHeaders({
+    const headers: Headers = new Headers({
       Authorization: `Bearer ${SpotifyAPIKey}`
     });
-    return { headers: headers };
+    const options: RequestOptions = new RequestOptions({ headers: headers });
+    return options;
   }
 
   private query(url: string, params?: string[]): Observable<any> {
-    let queryUrl = `${SpotifyService.BASE_URL}${url}`;
+    let queryUrl = `${SpotifyDeprecatedService.BASE_URL}${url}`;
     if (params) {
       queryUrl = `${queryUrl}?${params.join(`&`)}`;
     }
-    const options: any = this.buildRequestOptions();
+    const options: RequestOptions = this.buildRequestOptions();
 
-    return this.http.get(queryUrl, options);
+    return this.http.get(queryUrl, options)
+      .pipe(
+        map((response: Response) => response.json())
+      );
   }
 
   private search(query: string, type: string): Observable<any> {
     return this.query(`/search`, [`q=${query}`, `type=${type}`]);
   }
-
 }
