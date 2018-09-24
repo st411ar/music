@@ -135,4 +135,30 @@ describe('SpotifyDeprecatedService', () => {
       )
     );
   });
+
+  describe('searchTrack', () => {
+    it(
+      'searches type and term',
+      inject(
+        [
+          SpotifyDeprecatedService,
+          MockBackend
+        ],
+        fakeAsync(
+          (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
+            expectUrl(backend, 'https://api.spotify.com/v1/search?q=TERM&type=track');
+
+            let res;
+            spotify.searchTrack('TERM').subscribe((results: any) => {
+              expect(results.name).toBe('felipe');
+              res = results;
+            });
+
+            // tick();
+            expect(res.name).toBe('felipe');
+          }
+        )
+      )
+    );
+  });
 });
