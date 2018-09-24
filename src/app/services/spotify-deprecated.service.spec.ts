@@ -1,7 +1,9 @@
 import {
   BaseRequestOptions,
   ConnectionBackend,
-  Http
+  Http,
+  Response,
+  ResponseOptions
 } from '@angular/http';
 
 import { MockBackend } from '@angular/http/testing';
@@ -51,7 +53,17 @@ describe('SpotifyDeprecatedService', () => {
           MockBackend
         ],
         (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
-          console.log('logic with injections');
+          backend.connections.subscribe((c) => {
+            expect(c.request.url).toBe('https://api.spotify.com/v1/tracks/TRACK_ID');
+            let options: ResponseOptions = new ResponseOptions({
+              body: '{"name": "felipe"}'
+            });
+            c.mockRespond(new Response(options));
+          });
+
+          spotify.getTrack('TRACK_ID').subscribe((track: any) => {
+            expect(track.name).toBe('felipe');
+          });
         }
       )
     );
