@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { SpotifyService } from '../services/spotify.service';
+import {SpotifyDeprecatedService} from '../services/spotify-deprecated.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class SearchComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private spotify: SpotifyService
+      private spotify: SpotifyDeprecatedService
   ) {
     this.route.queryParams.subscribe(
       (params: Params) => {
