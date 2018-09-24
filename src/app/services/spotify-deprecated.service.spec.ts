@@ -9,8 +9,10 @@ import {
 import { MockBackend } from '@angular/http/testing';
 
 import {
+  fakeAsync,
   inject,
-  TestBed
+  TestBed,
+  tick
 } from '@angular/core/testing';
 
 import { SpotifyDeprecatedService } from './spotify-deprecated.service';
@@ -52,19 +54,27 @@ describe('SpotifyDeprecatedService', () => {
           SpotifyDeprecatedService,
           MockBackend
         ],
-        (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
-          backend.connections.subscribe((c) => {
-            expect(c.request.url).toBe('https://api.spotify.com/v1/tracks/TRACK_ID');
-            let options: ResponseOptions = new ResponseOptions({
-              body: '{"name": "felipe"}'
-            });
-            c.mockRespond(new Response(options));
-          });
+        fakeAsync(
+          (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
+            let res;
 
-          spotify.getTrack('TRACK_ID').subscribe((track: any) => {
-            expect(track.name).toBe('felipe');
-          });
-        }
+            backend.connections.subscribe((c) => {
+              expect(c.request.url).toBe('https://api.spotify.com/v1/tracks/TRACK_ID');
+              const options: ResponseOptions = new ResponseOptions({
+                body: '{"name": "felipe"}'
+              });
+              c.mockRespond(new Response(options));
+            });
+
+            spotify.getTrack('TRACK_ID').subscribe((track: any) => {
+              expect(track.name).toBe('felipe');
+              res = track;
+            });
+
+            // tick();
+            expect(res.name).toBe('felipe');
+          }
+        )
       )
     );
   });
