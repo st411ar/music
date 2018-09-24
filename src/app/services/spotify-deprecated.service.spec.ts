@@ -84,4 +84,29 @@ describe('SpotifyDeprecatedService', () => {
     );
   });
 
+  describe('getArtist', () => {
+    it(
+      'retrieves using the artist ID',
+      inject(
+        [
+          SpotifyDeprecatedService,
+          MockBackend
+        ],
+        fakeAsync(
+          (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
+            expectUrl(backend, 'https://api.spotify.com/v1/artists/ARTIST_ID');
+
+            let res;
+            spotify.getArtist('ARTIST_ID').subscribe((artist: any) => {
+              expect(artist.name).toBe('felipe');
+              res = artist;
+            });
+
+            // tick();
+            expect(res.name).toBe('felipe');
+          }
+        )
+      )
+    );
+  });
 });
