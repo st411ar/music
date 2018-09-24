@@ -17,6 +17,18 @@ import {
 
 import { SpotifyDeprecatedService } from './spotify-deprecated.service';
 
+
+function expectUrl(backend: MockBackend, url: string): void {
+  backend.connections.subscribe(c => {
+    expect(c.request.url).toBe(url);
+    const options: ResponseOptions = new ResponseOptions({
+      body: '{"name": "felipe"}'
+    });
+    c.mockRespond(new Response(options));
+  });
+}
+
+
 describe('SpotifyDeprecatedService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,16 +68,9 @@ describe('SpotifyDeprecatedService', () => {
         ],
         fakeAsync(
           (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
+            expectUrl(backend, 'https://api.spotify.com/v1/tracks/TRACK_ID');
+
             let res;
-
-            backend.connections.subscribe((c) => {
-              expect(c.request.url).toBe('https://api.spotify.com/v1/tracks/TRACK_ID');
-              const options: ResponseOptions = new ResponseOptions({
-                body: '{"name": "felipe"}'
-              });
-              c.mockRespond(new Response(options));
-            });
-
             spotify.getTrack('TRACK_ID').subscribe((track: any) => {
               expect(track.name).toBe('felipe');
               res = track;
@@ -78,4 +83,5 @@ describe('SpotifyDeprecatedService', () => {
       )
     );
   });
+
 });
