@@ -109,4 +109,30 @@ describe('SpotifyDeprecatedService', () => {
       )
     );
   });
+
+  describe('getAlbum', () => {
+    it(
+      'retrieves using the artist ID',
+      inject(
+        [
+          SpotifyDeprecatedService,
+          MockBackend
+        ],
+        fakeAsync(
+          (spotify: SpotifyDeprecatedService, backend: MockBackend) => {
+            expectUrl(backend, 'https://api.spotify.com/v1/albums/ALBUM_ID');
+
+            let res;
+            spotify.getAlbum('ALBUM_ID').subscribe((album: any) => {
+              expect(album.name).toBe('felipe');
+              res = album;
+            });
+
+            // tick();
+            expect(res.name).toBe('felipe');
+          }
+        )
+      )
+    );
+  });
 });
